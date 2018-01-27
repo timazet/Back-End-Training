@@ -1,0 +1,51 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.timazet</groupId>
+    <artifactId>step03</artifactId>
+    <packaging>war</packaging>
+    <version>1.0-SNAPSHOT</version>
+
+    <properties>
+        <testng.version>6.10</testng.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>${testng.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!--The dependency was specified to get sources of `maven-war-plugin`-->
+        <dependency>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-war-plugin</artifactId>
+            <version>2.2</version>
+            <classifier>sources</classifier>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <!--
+                        We can use different approaches (with forkMode=once and forkMode=never):
+                        1. with `forkMode=once` and by specifying `-Dmaven.surefire.debug` in console
+                        or through `debugForkedProcess` property in configuration and using default port `5005` to remote debug
+                        2. with `forkMode=once`, but specifying more detailed configuration than above
+                        3. with `forkMode=never` and `mvnDebug` using default port `8000` to debug Maven itself and not the forked process as it's in above cases
+                        4. with `forkMode=never` and `mvnDebug` and system property `MAVEN_DEBUG_OPTS=-Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8888`
+                    -->
+                    <!--<debugForkedProcess>true</debugForkedProcess>-->
+                    <!--<debugForkedProcess>-Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5555</debugForkedProcess>-->
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

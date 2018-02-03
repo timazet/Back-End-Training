@@ -2,16 +2,16 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.timazet</groupId>
-    <artifactId>part01</artifactId>
+    <artifactId>part1</artifactId>
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
 
     <modules>
-        <module>step01</module>
-        <module>step02</module>
-        <module>step03</module>
-        <module>step04</module>
-        <module>step05</module>
+        <module>step1_1</module>
+        <module>step1_2</module>
+        <module>step1_3</module>
+        <module>step1_4</module>
+        <module>step1_5</module>
     </modules>
 
 </project>

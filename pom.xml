@@ -7,7 +7,7 @@
     <version>1.0-SNAPSHOT</version>
 
     <modules>
-        <module>part01</module>
+        <module>part1</module>
     </modules>
 
 </project>

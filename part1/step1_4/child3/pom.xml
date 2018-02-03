@@ -3,12 +3,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>com.timazet.part01</groupId>
-        <artifactId>step04</artifactId>
+        <groupId>com.timazet.part1</groupId>
+        <artifactId>step1_4</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <groupId>com.timazet.part01</groupId>
+    <groupId>com.timazet.part1</groupId>
     <artifactId>child3</artifactId>
     <packaging>jar</packaging>
     <version>1.0-SNAPSHOT</version>
@@ -23,7 +23,7 @@
 
         <!--Add dependency on result artifact of sibling module, and thus we can try `-am` and `-amd` flags in action-->
         <dependency>
-            <groupId>com.timazet.part01</groupId>
+            <groupId>com.timazet.part1</groupId>
             <artifactId>child4</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>

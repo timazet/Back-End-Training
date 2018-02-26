@@ -1,0 +1,30 @@
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
+		 http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+         version="3.1">
+
+    <!--Specify servlets-->
+    <servlet>
+        <servlet-name>BlockingQueueServlet</servlet-name>
+        <servlet-class>com.timazet.servlet.BlockingQueueServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet>
+        <servlet-name>CustomBlockingQueueServlet</servlet-name>
+        <servlet-class>com.timazet.servlet.CustomBlockingQueueServlet</servlet-class>
+        <load-on-startup>2</load-on-startup>
+    </servlet>
+
+    <!--Add mapping for specified servlets-->
+    <servlet-mapping>
+        <servlet-name>BlockingQueueServlet</servlet-name>
+        <url-pattern>/queue</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CustomBlockingQueueServlet</servlet-name>
+        <url-pattern>/custom_queue</url-pattern>
+    </servlet-mapping>
+
+
+</web-app>

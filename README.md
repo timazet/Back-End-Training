@@ -11,7 +11,7 @@ Java Professionals Course (https://github.com/qala-io/java-course/)
   * Puzzles - ✓
 * Part II: Web and Application Servers
   * Step 1 - ✓
-  * Step 2 - n/a
+  * Step 2 - ✓
   * Step 3 - n/a
   * Step 4 - n/a
 * Part III: Spring & REST - n/a

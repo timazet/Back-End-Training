@@ -45,7 +45,7 @@ public class LoadTest {
             try (CloseableHttpClient client = HttpClientBuilder.create().disableAutomaticRetries().build()) {
                 for (int i = 0; i < INVOCATIONS_NUMBER; i++) {
                     try {
-                        Files.readFile(client.execute(new HttpGet(URL)).getEntity().getContent());
+                        Files.streamToString(client.execute(new HttpGet(URL)).getEntity().getContent());
                     } catch (IOException e) {
                         rejectedRequests.incrementAndGet();
                     }

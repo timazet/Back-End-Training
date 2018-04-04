@@ -5,6 +5,7 @@ import com.timazet.controller.dto.ErrorResponse;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.hamcrest.CustomMatcher;
 import org.springframework.http.HttpStatus;
 import org.testng.annotations.BeforeClass;
@@ -52,6 +53,16 @@ public class DogApiTest {
                 given().body(jerryLee).contentType(ContentType.JSON).when().put(DOG, incorrectUUID), incorrectUUID);
 
         assertThatBadRequestAndContainsIdInResponse(when().delete(DOG, incorrectUUID), incorrectUUID);
+    }
+
+    @Test
+    public void shouldReturnBadRequestForViolatedDog() {
+        Dog invalidDog = new Dog(UUID.randomUUID(), RandomStringUtils.randomAlphabetic(101), LocalDate.now().plusDays(1),
+                0, 0);
+
+        assertThatBadRequest(given().body(invalidDog).contentType(ContentType.JSON).when().post(DOGS));
+
+        assertThatBadRequest(given().body(invalidDog).contentType(ContentType.JSON).when().put(DOG, invalidDog.getId()));
     }
 
 
@@ -143,6 +154,11 @@ public class DogApiTest {
     private static void assertThatNotAcceptable(Response response) {
         response.then().assertThat()
                 .statusCode(HttpStatus.NOT_ACCEPTABLE.value());
+    }
+
+    private static void assertThatBadRequest(Response response) {
+        response.then().assertThat()
+                .statusCode(HttpStatus.BAD_REQUEST.value());
     }
 
     private static void assertThatBadRequestAndContainsIdInResponse(Response response, Object id) {

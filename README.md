@@ -22,7 +22,12 @@ Java Professionals Course (https://github.com/qala-io/java-course/)
   * Step 5 - ✓
   * Step 6 - ✓
   * Step 7 - ✓
-* Part IV: JDBC & Co. - n/a
+* Part IV: JDBC & Co.
+  * Step 1 - n/a
+  * Step 2 - n/a
+  * Step 3 - n/a
+  * Step 4 - n/a
+  * Step 5 - n/a
 * Part V: Declarative Transactions & AOP - n/a
 * Part VI: DB Pools - n/a
 * Part VII: Hibernate - n/a

@@ -65,9 +65,16 @@
             <version>6.0.9.Final</version>
         </dependency>
         <dependency>
-            <groupId>org.glassfish</groupId>
-            <artifactId>javax.el</artifactId>
-            <version>3.0.1-b09</version>
+            <!--EL API/Impl is needed at least by Hibernate Validator for message interpolation to work (resolving
+            expressions like "error {0}"-->
+            <groupId>org.apache.tomcat.embed</groupId>
+            <artifactId>tomcat-embed-el</artifactId>
+            <version>8.5.4</version>
+            <!--This API and the implementation is provided by the servlet container. We need it here only for tests.
+            Usually Hibernate Validator is configured with the Glassfish implementation (as it's described in the
+            official doc), but since we're going to use Tomcat as the primary App Server using it in the tests too
+            would make the tests more realistic.-->
+            <scope>provided</scope>
         </dependency>
 
 
@@ -102,7 +109,6 @@
             <version>${spring.version}</version>
             <scope>test</scope>
         </dependency>
-
 
     </dependencies>
 

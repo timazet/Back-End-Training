@@ -1,31 +1,26 @@
 package com.timazet.controller.dto;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
-import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.util.StdDateFormat;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
-@Data
+@ToString
+@Getter
 @NoArgsConstructor
 public class ErrorResponse {
 
-    /**
-     * We should specify serializer and deserializer or set up the jackson mapper to use JavaTimeModule, because
-     * it's new formats, which are not included into defaults
-     */
-    @JsonSerialize(using = LocalDateTimeSerializer.class)
-    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
-    private LocalDateTime timestamp;
+    @JsonFormat(pattern = StdDateFormat.DATE_FORMAT_STR_ISO8601)
+    private ZonedDateTime timestamp;
 
     private String message;
 
     public ErrorResponse(String message) {
         this.message = message;
-        this.timestamp = LocalDateTime.now();
+        this.timestamp = ZonedDateTime.now();
     }
 
 }

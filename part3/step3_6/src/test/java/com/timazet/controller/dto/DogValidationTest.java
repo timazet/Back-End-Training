@@ -80,18 +80,6 @@ public class DogValidationTest {
     }
 
     @Test
-    public void shouldFindViolatedWidthWhenNotPositive() {
-        int validWidth = 1;
-        assertThat(validator.validate(new Dog(null, VALID_NAME, VALID_BIRTH_DATE, VALID_HEIGHT, validWidth)), empty());
-
-        int invalidWidth = 0;
-        Set<ConstraintViolation<Dog>> violations = validator.validate(
-                new Dog(null, VALID_NAME, VALID_BIRTH_DATE, VALID_HEIGHT, invalidWidth));
-        assertThat(violations, hasSize(1));
-        assertThat(violations.iterator().next().getMessage(), equalTo(INVALID_WIDTH_MESSAGE));
-    }
-
-    @Test
     public void shouldFindAllViolatedFields() {
         Set<ConstraintViolation<Dog>> violations = validator.validate(new Dog(null, "", LocalDate.now().plusDays(1), 0, 0));
         assertThat(violations, hasSize(4));

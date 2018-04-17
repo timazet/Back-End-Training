@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd">
+
+    <context:annotation-config/>
+    <mvc:annotation-driven/>
+
+    <bean class="com.timazet.controller.DogController">
+        <constructor-arg ref="dogDao"/>
+    </bean>
+    <bean class="com.timazet.controller.ControllerExceptionHandler"/>
+
+    <!-- by specifying '-Dspring.profiles.active=jdbc' we can activate JdbcDogDao implementation instead of InMemoryDogDao-->
+    <beans profile="jdbc">
+        <bean id="dogDao" class="com.timazet.dao.JdbcDogDao">
+            <constructor-arg>
+                <jdbc:embedded-database type="H2" database-name="dog_db">
+                    <jdbc:script location="classpath:db/schema.sql"/>
+                    <jdbc:script location="classpath:db/data.sql"/>
+                </jdbc:embedded-database>
+            </constructor-arg>
+        </bean>
+    </beans>
+    <beans profile="!jdbc">
+        <bean id="dogDao" class="com.timazet.dao.InMemoryDogDao"/>
+    </beans>
+
+</beans>

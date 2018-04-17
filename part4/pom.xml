@@ -8,6 +8,7 @@
 
     <modules>
         <module>step4_1</module>
+        <module>step4_2</module>
     </modules>
 
 </project>

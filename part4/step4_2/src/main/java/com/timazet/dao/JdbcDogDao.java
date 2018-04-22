@@ -3,25 +3,23 @@ package com.timazet.dao;
 import com.timazet.controller.DogNotFoundException;
 import com.timazet.controller.dto.Dog;
 import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.sql.*;
 import java.sql.Date;
 import java.util.*;
 
-@Slf4j
 @AllArgsConstructor
-@Repository
 public class JdbcDogDao implements DogDao {
 
     private DataSource dataSource;
 
+    @Override
     public Collection<Dog> get() {
         return executeQuery("SELECT id, name, birth_date, height, weight FROM DOG", JdbcDogDao::convert);
     }
 
+    @Override
     public Dog get(final UUID id) {
         return executeQuery(String.format("SELECT id, name, birth_date, height, weight FROM DOG WHERE id = '%s'", id), resultSet -> {
             List<Dog> result = convert(resultSet);
@@ -32,6 +30,7 @@ public class JdbcDogDao implements DogDao {
         });
     }
 
+    @Override
     public Dog create(final Dog dog) {
         dog.setId(UUID.randomUUID());
         executeUpdate(String.format("INSERT INTO DOG (id, name, birth_date, height, weight) values ('%s', '%s', '%s', %d, %d)",
@@ -39,6 +38,7 @@ public class JdbcDogDao implements DogDao {
         return dog;
     }
 
+    @Override
     public Dog update(final Dog dog) {
         int count = executeUpdate(String.format("UPDATE DOG SET name = '%s', birth_date = '%s', height = %d, weight = %d where id = '%s'",
                 dog.getName(), dog.getBirthDate(), dog.getHeight(), dog.getWeight(), dog.getId()));
@@ -48,6 +48,7 @@ public class JdbcDogDao implements DogDao {
         return dog;
     }
 
+    @Override
     public void delete(final UUID id) {
         int count = executeUpdate(String.format("DELETE FROM DOG where id = '%s'", id));
         if (count <= 0) {
@@ -96,9 +97,7 @@ public class JdbcDogDao implements DogDao {
 
     @FunctionalInterface
     interface Converter<T> {
-
         T convert(ResultSet resultSet) throws SQLException;
-
     }
 
 }

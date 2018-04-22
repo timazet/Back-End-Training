@@ -1,0 +1,8 @@
+-- DDL for DOG table
+CREATE TABLE IF NOT EXISTS DOG (
+  ID         UUID PRIMARY KEY,
+  NAME       VARCHAR(100) NOT NULL,
+  BIRTH_DATE DATE,
+  HEIGHT     INT          NOT NULL,
+  WEIGHT     INT          NOT NULL
+);

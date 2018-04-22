@@ -2,6 +2,7 @@ package com.timazet.dao;
 
 import com.timazet.controller.DogNotFoundException;
 import com.timazet.controller.dto.Dog;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.annotation.PostConstruct;
 import java.time.LocalDate;
@@ -10,12 +11,15 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
+@Slf4j
 public class InMemoryDogDao implements DogDao {
 
     private Map<UUID, Dog> dogs = new ConcurrentHashMap<>();
 
     @PostConstruct
     public void init() {
+        log.info("Using DogDao based on in-memory storage usage");
+
         Dog pluto = new Dog(UUID.randomUUID(), "Pluto", LocalDate.of(1930, 1, 15),
                 65, 25);
         Dog goofy = new Dog(UUID.randomUUID(), "Goofy", LocalDate.of(1932, 5, 13),
@@ -31,12 +35,10 @@ public class InMemoryDogDao implements DogDao {
         dogs.put(kommissarRex.getId(), kommissarRex);
     }
 
-    @Override
     public Collection<Dog> get() {
         return dogs.values();
     }
 
-    @Override
     public Dog get(final UUID id) {
         if (!dogs.containsKey(id)) {
             throw new DogNotFoundException(id);
@@ -44,14 +46,12 @@ public class InMemoryDogDao implements DogDao {
         return dogs.get(id);
     }
 
-    @Override
     public Dog create(final Dog dog) {
         dog.setId(UUID.randomUUID());
         dogs.put(dog.getId(), dog);
         return dog;
     }
 
-    @Override
     public Dog update(final Dog dog) {
         if (!dogs.containsKey(dog.getId())) {
             throw new DogNotFoundException(dog.getId());
@@ -60,7 +60,6 @@ public class InMemoryDogDao implements DogDao {
         return dog;
     }
 
-    @Override
     public void delete(final UUID id) {
         if (!dogs.containsKey(id)) {
             throw new DogNotFoundException(id);

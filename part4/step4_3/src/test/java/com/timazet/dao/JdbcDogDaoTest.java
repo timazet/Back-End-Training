@@ -18,7 +18,7 @@ import java.util.UUID;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
-@ActiveProfiles("oracle")
+@ActiveProfiles("h2")
 @Sql(scripts = {"classpath:db/drop_all.sql", "classpath:db/schema.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 @ContextConfiguration("classpath:persistence-context.xml")
 public class JdbcDogDaoTest extends AbstractTestNGSpringContextTests {

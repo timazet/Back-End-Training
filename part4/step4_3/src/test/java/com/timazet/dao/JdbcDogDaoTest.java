@@ -8,7 +8,6 @@ import org.h2.jdbc.JdbcSQLException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.annotations.Test;
 
@@ -18,8 +17,7 @@ import java.util.UUID;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
-@ActiveProfiles("h2")
-@Sql(scripts = {"classpath:db/drop_all.sql", "classpath:db/schema.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+@ActiveProfiles("prepared")
 @ContextConfiguration("classpath:persistence-context.xml")
 public class JdbcDogDaoTest extends AbstractTestNGSpringContextTests {
 

@@ -32,13 +32,13 @@ public class JdbcStatementDogDao extends JdbcDogDao implements DogDao {
 
     @Override
     public Collection<Dog> get() {
-        return executeQuery("SELECT id, name, birth_date, height, weight FROM DOG", JdbcDogDao::convert);
+        return executeQuery("SELECT id, name, birth_date, height, weight FROM DOG", this::convert);
     }
 
     @Override
     public Dog get(final UUID id) {
         return executeQuery(String.format("SELECT id, name, birth_date, height, weight FROM DOG WHERE id = %s", wrapIfNecessary(id)), resultSet -> {
-            List<Dog> result = JdbcDogDao.convert(resultSet);
+            List<Dog> result = convert(resultSet);
             if (result.isEmpty()) {
                 throw new DogNotFoundException(id);
             }

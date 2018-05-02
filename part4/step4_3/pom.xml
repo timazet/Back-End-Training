@@ -10,10 +10,18 @@
         <spring.version>5.0.2.RELEASE</spring.version>
         <jackson.version>2.9.2</jackson.version>
         <h2.version>1.4.197</h2.version>
+        <oracle.version>11.2.0.3</oracle.version>
         <testng.version>6.10</testng.version>
         <restassured.version>3.0.7</restassured.version>
         <assertj.version>3.9.1</assertj.version>
     </properties>
+
+    <repositories>
+        <repository>
+            <id>datanucleus</id>
+            <url>http://www.datanucleus.org/downloads/maven2/</url>
+        </repository>
+    </repositories>
 
     <dependencies>
         <!--servlet api-->
@@ -102,6 +110,13 @@
             <artifactId>h2</artifactId>
             <version>${h2.version}</version>
         </dependency>
+        <!--check https://mvnrepository.com/artifact/oracle/ojdbc6/11.2.0.3 to get more info-->
+        <dependency>
+            <groupId>oracle</groupId>
+            <artifactId>ojdbc6</artifactId>
+            <version>${oracle.version}</version>
+        </dependency>
+
 
         <!-- Testing -->
         <dependency>

@@ -29,7 +29,7 @@ public class JdbcPreparedStatementDogDao extends JdbcDogDao implements DogDao {
     @Override
     public Collection<Dog> get() {
         return executeQuery("SELECT id, name, birth_date, height, weight FROM DOG", statement -> {
-        }, JdbcDogDao::convert);
+        }, this::convert);
     }
 
     @Override
@@ -37,7 +37,7 @@ public class JdbcPreparedStatementDogDao extends JdbcDogDao implements DogDao {
         return executeQuery("SELECT id, name, birth_date, height, weight FROM DOG WHERE id = ?",
                 statement -> statement.setObject(1, id),
                 resultSet -> {
-                    List<Dog> result = JdbcDogDao.convert(resultSet);
+                    List<Dog> result = convert(resultSet);
                     if (result.isEmpty()) {
                         throw new DogNotFoundException(id);
                     }
@@ -83,7 +83,7 @@ public class JdbcPreparedStatementDogDao extends JdbcDogDao implements DogDao {
         }
     }
 
-    private <T> T executeQuery(final String query, final PrepareAction action, final Converter<T> converter) {
+    protected <T> T executeQuery(final String query, final PrepareAction action, final Converter<T> converter) {
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
             action.apply(statement);
@@ -95,7 +95,7 @@ public class JdbcPreparedStatementDogDao extends JdbcDogDao implements DogDao {
         }
     }
 
-    private int executeUpdate(final String query, final PrepareAction action) {
+    protected int executeUpdate(final String query, final PrepareAction action) {
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
             action.apply(statement);
@@ -106,7 +106,7 @@ public class JdbcPreparedStatementDogDao extends JdbcDogDao implements DogDao {
     }
 
     @FunctionalInterface
-    private interface PrepareAction {
+    protected interface PrepareAction {
         void apply(PreparedStatement statement) throws SQLException;
     }
 

@@ -12,7 +12,7 @@ import java.util.UUID;
 
 public abstract class JdbcDogDao {
 
-    static List<Dog> convert(ResultSet resultSet) throws SQLException {
+    protected List<Dog> convert(ResultSet resultSet) throws SQLException {
         List<Dog> result = new ArrayList<>();
         while (resultSet.next()) {
             result.add(convertSingle(resultSet));
@@ -20,7 +20,7 @@ public abstract class JdbcDogDao {
         return result;
     }
 
-    static Dog convertSingle(ResultSet resultSet) throws SQLException {
+    protected Dog convertSingle(ResultSet resultSet) throws SQLException {
         Dog result = new Dog();
         result.setId((UUID) resultSet.getObject(Dog.ID));
         result.setName(resultSet.getString(Dog.NAME));

@@ -1,0 +1,9 @@
+version: '3'
+
+services:
+  oracle-xe-11g:
+    image: sath89/oracle-xe-11g
+    container_name: oracle-xe-11g
+    ports:
+      - "49160:22"
+      - "49161:1521"

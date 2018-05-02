@@ -52,9 +52,6 @@
             </constructor-arg>
         </bean>
     </beans>
-    <beans profile="h2">
-
-    </beans>
     <beans profile="default">
         <bean id="dogDao" class="com.timazet.dao.InMemoryDogDao"/>
     </beans>

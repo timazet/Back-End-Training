@@ -1,11 +1,8 @@
 package com.timazet.service;
 
-import com.timazet.controller.DogNotFoundException;
 import com.timazet.controller.dto.Dog;
-import com.timazet.dao.DogDao;
 import com.timazet.dao.JdbcConnectionHolder;
 import lombok.RequiredArgsConstructor;
-import org.springframework.util.Assert;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -14,49 +11,37 @@ import java.util.UUID;
 import java.util.function.Supplier;
 
 @RequiredArgsConstructor
-public class DogService {
+public class TransactionalDogService implements DogService {
 
-    private final DogDao dao;
+    private final DogService delegate;
     private final JdbcConnectionHolder connectionHolder;
 
+    @Override
     public Collection<Dog> get() {
-        return execute(dao::get);
+        return execute(delegate::get);
     }
 
+    @Override
     public Dog get(UUID id) {
-        Assert.notNull(id, "Id should not be null");
-
-        Dog result = execute(() -> dao.get(id));
-        if (result == null) {
-            throw new DogNotFoundException(id);
-        }
-        return result;
+        return execute(() -> delegate.get(id));
     }
 
+    @Override
     public Dog create(Dog dog) {
-        Assert.notNull(dog, "Dog should not be null");
-
-        dog.setId(UUID.randomUUID());
-        execute(() -> dao.create(dog));
-        return dog;
+        return execute(() -> delegate.create(dog));
     }
 
+    @Override
     public Dog update(Dog dog) {
-        Assert.notNull(dog, "Dog should not be null");
-        Assert.notNull(dog.getId(), "Id should not be null");
-
-        if (execute(() -> dao.update(dog)) <= 0) {
-            throw new DogNotFoundException(dog.getId());
-        }
-        return dog;
+        return execute(() -> delegate.update(dog));
     }
 
+    @Override
     public void delete(UUID id) {
-        Assert.notNull(id, "Id should not be null");
-
-        if (execute(() -> dao.delete(id)) <= 0) {
-            throw new DogNotFoundException(id);
-        }
+        execute(() -> {
+            delegate.delete(id);
+            return null;
+        });
     }
 
     private <T> T execute(final Supplier<T> supplier) {

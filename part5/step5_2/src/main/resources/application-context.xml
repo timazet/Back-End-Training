@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <import resource="persistence-context.xml"/>
+
+    <bean id="dogService" class="com.timazet.service.TransactionalDogService">
+        <constructor-arg>
+            <bean class="com.timazet.service.DogServiceImpl">
+                <constructor-arg ref="dogDao"/>
+            </bean>
+        </constructor-arg>
+        <constructor-arg ref="connectionHolder"/>
+    </bean>
+
+</beans>

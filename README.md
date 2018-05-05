@@ -29,7 +29,7 @@ Java Professionals Course (https://github.com/qala-io/java-course/)
   * Step 4 - ✓
   * Step 5 - ✓
 * Part V: Declarative Transactions & AOP
-  * Step 1 - n/a
+  * Step 1 - ✓
   * Step 2 - n/a
   * Step 3 - n/a
   * Step 4 - n/a

@@ -12,26 +12,10 @@
 
     <context:annotation-config/>
 
-    <!-- by specifying '-Dspring.profiles.active=oracle' we can activate JdbcOraclePreparedStatementDogDao implementation
-        instead of InMemoryDogDao, JdbcStatementDogDao and JdbcPreparedStatementDogDao -->
     <!-- by specifying '-Dspring.profiles.active=prepared' we can activate JdbcPreparedStatementDogDao implementation
         instead of InMemoryDogDao and JdbcStatementDogDao -->
     <!-- by specifying '-Dspring.profiles.active=h2' we can activate JdbcStatementDogDao implementation
         instead of InMemoryDogDao -->
-    <beans profile="oracle">
-        <bean id="dataSource" class="oracle.jdbc.pool.OracleDataSource">
-            <property name="URL" value="jdbc:oracle:thin:@localhost:49161:xe"/>
-            <property name="user" value="system"/>
-            <property name="password" value="oracle"/>
-        </bean>
-        <jdbc:initialize-database>
-            <jdbc:script location="classpath:db/oracle/schema.sql"/>
-            <jdbc:script location="classpath:db/oracle/data.sql"/>
-        </jdbc:initialize-database>
-        <bean id="dogDao" class="com.timazet.dao.JdbcOraclePreparedStatementDogDao">
-            <constructor-arg ref="dataSource"/>
-        </bean>
-    </beans>
     <beans profile="prepared">
         <bean id="dogDao" class="com.timazet.dao.JdbcPreparedStatementDogDao">
             <constructor-arg>

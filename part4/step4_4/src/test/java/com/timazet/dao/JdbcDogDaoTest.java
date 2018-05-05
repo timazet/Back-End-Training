@@ -4,13 +4,13 @@ import com.timazet.controller.dto.Dog;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.RandomUtils;
 import org.assertj.core.api.ThrowableAssert;
-import org.h2.jdbc.JdbcSQLException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.annotations.Test;
 
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.UUID;
 
@@ -67,10 +67,10 @@ public class JdbcDogDaoTest extends AbstractTestNGSpringContextTests {
 
     private void assertThatThrowExceptionOnFieldConstraintViolation(final ConstraintViolationAction<Dog> action) {
         Dog toCreate = action.applyAndReturn(generateValidDog());
-        assertThatJdbcSQLExceptionIsCause(() -> dogDao.create(toCreate));
+        assertThatSQLExceptionIsCause(() -> dogDao.create(toCreate));
 
         Dog toUpdate = action.applyAndReturn(dogDao.create(generateValidDog()));
-        assertThatJdbcSQLExceptionIsCause(() -> dogDao.update(toUpdate));
+        assertThatSQLExceptionIsCause(() -> dogDao.update(toUpdate));
     }
 
     private void assertThatNoExceptionOnFieldConstraintViolation(final ConstraintViolationAction<Dog> action) {
@@ -81,8 +81,8 @@ public class JdbcDogDaoTest extends AbstractTestNGSpringContextTests {
         assertThatNoException(() -> dogDao.update(toUpdate));
     }
 
-    private void assertThatJdbcSQLExceptionIsCause(final ThrowableAssert.ThrowingCallable callable) {
-        assertThatCode(callable).hasCauseExactlyInstanceOf(JdbcSQLException.class);
+    private void assertThatSQLExceptionIsCause(final ThrowableAssert.ThrowingCallable callable) {
+        assertThatCode(callable).hasCauseInstanceOf(SQLException.class);
     }
 
     private void assertThatNoException(final ThrowableAssert.ThrowingCallable callable) {

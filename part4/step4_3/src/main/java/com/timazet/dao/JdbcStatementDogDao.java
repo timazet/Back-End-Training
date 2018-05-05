@@ -20,7 +20,7 @@ import java.util.UUID;
 
 @Slf4j
 @RequiredArgsConstructor
-public class JdbcStatementDogDao extends JdbcDogDao implements DogDao {
+public class JdbcStatementDogDao extends JdbcDogDao {
 
     @Getter(AccessLevel.PROTECTED)
     private final DataSource dataSource;

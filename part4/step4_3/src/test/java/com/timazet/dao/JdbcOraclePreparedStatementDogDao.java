@@ -4,7 +4,6 @@ import com.timazet.controller.DogNotFoundException;
 import com.timazet.controller.dto.Dog;
 import lombok.extern.slf4j.Slf4j;
 
-import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
 import java.sql.Date;
 import java.sql.ResultSet;
@@ -16,15 +15,10 @@ import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
-public class JdbcOraclePreparedStatementDogDao extends JdbcPreparedStatementDogDao {
+public class JdbcOraclePreparedStatementDogDao extends JdbcPreparedStatementOneConnectionDogDao {
 
     public JdbcOraclePreparedStatementDogDao(DataSource dataSource) {
         super(dataSource);
-    }
-
-    @PostConstruct
-    private void init() {
-        log.info("Using DogDao based on oracle jdbc prepared statement usage");
     }
 
     @Override
@@ -47,8 +41,8 @@ public class JdbcOraclePreparedStatementDogDao extends JdbcPreparedStatementDogD
                 statement -> {
                     statement.setString(1, Optional.ofNullable(dog.getId()).map(UUID::toString).orElse(null));
                     statement.setString(2, dog.getName());
-                    statement.setObject(3, Optional.ofNullable(dog.getBirthDate()).map(LocalDate::toEpochDay)
-                            .map(days -> new Date(TimeUnit.DAYS.convert(days, TimeUnit.MILLISECONDS))).orElse(null));
+                    statement.setDate(3, Optional.ofNullable(dog.getBirthDate()).map(LocalDate::toEpochDay)
+                            .map(days -> new Date(TimeUnit.MILLISECONDS.convert(days, TimeUnit.DAYS))).orElse(null));
                     statement.setInt(4, dog.getHeight());
                     statement.setInt(5, dog.getWeight());
                 });
@@ -60,8 +54,8 @@ public class JdbcOraclePreparedStatementDogDao extends JdbcPreparedStatementDogD
         int count = executeUpdate("UPDATE DOG SET name = ?, birth_date = ?, height = ?, weight = ? where id = ?",
                 statement -> {
                     statement.setString(1, dog.getName());
-                    statement.setObject(2, Optional.ofNullable(dog.getBirthDate()).map(LocalDate::toEpochDay)
-                            .map(days -> new Date(TimeUnit.DAYS.convert(days, TimeUnit.MILLISECONDS))).orElse(null));
+                    statement.setDate(2, Optional.ofNullable(dog.getBirthDate()).map(LocalDate::toEpochDay)
+                            .map(days -> new Date(TimeUnit.MILLISECONDS.convert(days, TimeUnit.DAYS))).orElse(null));
                     statement.setInt(3, dog.getHeight());
                     statement.setInt(4, dog.getWeight());
                     statement.setString(5, Optional.ofNullable(dog.getId()).map(UUID::toString).orElse(null));
@@ -92,4 +86,5 @@ public class JdbcOraclePreparedStatementDogDao extends JdbcPreparedStatementDogD
         result.setWeight(resultSet.getInt(Dog.WEIGHT));
         return result;
     }
+
 }

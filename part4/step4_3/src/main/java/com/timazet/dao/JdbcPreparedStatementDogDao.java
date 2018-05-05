@@ -2,6 +2,8 @@ package com.timazet.dao;
 
 import com.timazet.controller.DogNotFoundException;
 import com.timazet.controller.dto.Dog;
+import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -17,12 +19,13 @@ import java.util.UUID;
 
 @Slf4j
 @RequiredArgsConstructor
-public class JdbcPreparedStatementDogDao extends JdbcDogDao implements DogDao {
+public class JdbcPreparedStatementDogDao extends JdbcDogDao {
 
+    @Getter(AccessLevel.PROTECTED)
     private final DataSource dataSource;
 
     @PostConstruct
-    private void init() {
+    protected void init() {
         log.info("Using DogDao based on jdbc prepared statement usage");
     }
 

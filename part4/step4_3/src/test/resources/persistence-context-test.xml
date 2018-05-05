@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/jdbc
+        http://www.springframework.org/schema/jdbc/spring-jdbc.xsd">
+
+    <context:annotation-config/>
+    <import resource="persistence-context.xml"/>
+
+    <!-- by specifying '-Dspring.profiles.active=oracle' we can activate JdbcOraclePreparedStatementDogDao implementation
+        instead of default InMemoryDogDao -->
+    <!-- by specifying '-Dspring.profiles.active=one-connection' we can activate JdbcPreparedStatementOneConnectionDogDao implementation
+        instead of default InMemoryDogDao -->
+    <beans profile="oracle">
+        <bean id="dataSource" class="oracle.jdbc.pool.OracleDataSource">
+            <property name="URL" value="jdbc:oracle:thin:@localhost:49161:xe"/>
+            <property name="user" value="system"/>
+            <property name="password" value="oracle"/>
+            <property name="maxStatements" value="5"/>
+        </bean>
+        <jdbc:initialize-database>
+            <jdbc:script location="classpath:db/oracle/schema.sql"/>
+            <jdbc:script location="classpath:db/oracle/data.sql"/>
+        </jdbc:initialize-database>
+        <bean id="dogDao" class="com.timazet.dao.JdbcOraclePreparedStatementDogDao">
+            <constructor-arg ref="dataSource"/>
+        </bean>
+    </beans>
+    <beans profile="one-connection">
+        <bean id="dataSource" class="org.h2.jdbcx.JdbcDataSource">
+            <!-- You can manipulate prepared statement query cache size by specifying that property in database connection url -->
+            <property name="url"
+                      value="jdbc:h2:mem:dog_db;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=false;QUERY_CACHE_SIZE=2"/>
+            <property name="user" value="sa"/>
+            <property name="password" value=""/>
+        </bean>
+        <jdbc:initialize-database>
+            <jdbc:script location="classpath:db/h2/schema.sql"/>
+            <jdbc:script location="classpath:db/h2/data.sql"/>
+        </jdbc:initialize-database>
+        <bean id="dogDao" class="com.timazet.dao.JdbcPreparedStatementOneConnectionDogDao">
+            <constructor-arg ref="dataSource"/>
+        </bean>
+    </beans>
+
+</beans>

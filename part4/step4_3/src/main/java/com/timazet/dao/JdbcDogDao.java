@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-public abstract class JdbcDogDao {
+public abstract class JdbcDogDao implements DogDao {
 
     protected List<Dog> convert(ResultSet resultSet) throws SQLException {
         List<Dog> result = new ArrayList<>();

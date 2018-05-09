@@ -1,6 +1,5 @@
 package com.timazet.service;
 
-import com.timazet.controller.DogNotFoundException;
 import com.timazet.controller.dto.Dog;
 import com.timazet.dao.DogDao;
 import lombok.RequiredArgsConstructor;
@@ -22,41 +21,26 @@ public class DogServiceImpl implements DogService {
     @Override
     public Dog get(UUID id) {
         Assert.notNull(id, "Id should not be null");
-
-        Dog result = dao.get(id);
-        if (result == null) {
-            throw new DogNotFoundException(id);
-        }
-        return result;
+        return dao.get(id);
     }
 
     @Override
     public Dog create(Dog dog) {
         Assert.notNull(dog, "Dog should not be null");
-
-        dog.setId(UUID.randomUUID());
-        dao.create(dog);
-        return dog;
+        return dao.create(dog);
     }
 
     @Override
     public Dog update(Dog dog) {
         Assert.notNull(dog, "Dog should not be null");
         Assert.notNull(dog.getId(), "Id should not be null");
-
-        if (dao.update(dog) <= 0) {
-            throw new DogNotFoundException(dog.getId());
-        }
-        return dog;
+        return dao.update(dog);
     }
 
     @Override
     public void delete(UUID id) {
         Assert.notNull(id, "Id should not be null");
-
-        if (dao.delete(id) <= 0) {
-            throw new DogNotFoundException(id);
-        }
+        dao.delete(id);
     }
 
 }

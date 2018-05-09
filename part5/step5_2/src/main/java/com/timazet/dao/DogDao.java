@@ -1,5 +1,6 @@
 package com.timazet.dao;
 
+import com.timazet.controller.DogNotFoundException;
 import com.timazet.controller.dto.Dog;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,12 +31,16 @@ public class DogDao {
                 statement -> statement.setObject(1, id),
                 resultSet -> {
                     List<Dog> result = convert(resultSet);
-                    return result.isEmpty() ? null : result.get(0);
+                    if (result.isEmpty()) {
+                        throw new DogNotFoundException(id);
+                    }
+                    return result.get(0);
                 });
     }
 
-    public int create(final Dog dog) {
-        return executeUpdate("INSERT INTO DOG (id, name, birth_date, height, weight) values (?, ?, ?, ?, ?)",
+    public Dog create(final Dog dog) {
+        dog.setId(UUID.randomUUID());
+        executeUpdate("INSERT INTO DOG (id, name, birth_date, height, weight) values (?, ?, ?, ?, ?)",
                 statement -> {
                     statement.setObject(1, dog.getId());
                     statement.setString(2, dog.getName());
@@ -43,10 +48,11 @@ public class DogDao {
                     statement.setInt(4, dog.getHeight());
                     statement.setInt(5, dog.getWeight());
                 });
+        return dog;
     }
 
-    public int update(final Dog dog) {
-        return executeUpdate("UPDATE DOG SET name = ?, birth_date = ?, height = ?, weight = ? where id = ?",
+    public Dog update(final Dog dog) {
+        int count = executeUpdate("UPDATE DOG SET name = ?, birth_date = ?, height = ?, weight = ? where id = ?",
                 statement -> {
                     statement.setString(1, dog.getName());
                     statement.setObject(2, dog.getBirthDate());
@@ -54,10 +60,17 @@ public class DogDao {
                     statement.setInt(4, dog.getWeight());
                     statement.setObject(5, dog.getId());
                 });
+        if (count <= 0) {
+            throw new DogNotFoundException(dog.getId());
+        }
+        return dog;
     }
 
-    public int delete(final UUID id) {
-        return executeUpdate("DELETE FROM DOG where id = ?", statement -> statement.setObject(1, id));
+    public void delete(final UUID id) {
+        int count = executeUpdate("DELETE FROM DOG where id = ?", statement -> statement.setObject(1, id));
+        if (count <= 0) {
+            throw new DogNotFoundException(id);
+        }
 
     }
 

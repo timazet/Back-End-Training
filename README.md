@@ -3,38 +3,39 @@ Java Professionals Course (https://github.com/qala-io/java-course/)
 
 #### Progress
 * Part I: Maven
-  * Step 1 - ✓
-  * Step 2 - ✓
-  * Step 3 - ✓
-  * Step 4 - ✓
-  * Step 5 - ✓
+  * Step 1 - Getting Acquainted - ✓
+  * Step 2 - Lifecycle, phases, plugins - ✓
+  * Step 3 - Debugging - ✓
+  * Step 4 - Inheritance and Aggregation - ✓
+  * Step 5 - Advanced Dependencies - ✓
   * Puzzles - ✓
 * Part II: Web and Application Servers
-  * Step 1 - ✓
-  * Step 2 - ✓
-  * Step 3 - ✓
-  * Step 4 - ✓
+  * Step 1 - Servlets API core - ✓
+  * Step 2 - Thread Pools - ✓
+  * Step 3 - Application Servers - ✓
+  * Step 4 - Memory Leaks - ✓
 * Part III: Spring & REST
-  * Step 1 - ✓
-  * Step 2 - ✓
-  * Step 3 - ✓
-  * Step 4 - ✓
-  * Step 5 - ✓
-  * Step 6 - ✓
-  * Step 7 - ✓
+  * Step 1 - HTTP - ✓
+  * Step 2 - REST Basics - ✓
+  * Step 3 - Spring IoC - ✓
+  * Step 4 - Spring MVC - ✓
+  * Step 5 - Create REST app - ✓
+  * Step 6 - Validation - ✓
+  * Step 7 - Advanced REST - ✓
 * Part IV: JDBC & Co.
-  * Step 1 - ✓
-  * Step 2 - ✓
-  * Step 3 - ✓
-  * Step 4 - ✓
-  * Step 5 - ✓
+  * Step 1 - Preparations before working with DB - ✓
+  * Step 2 - Basic JDBC - ✓
+  * Step 3 - PreparedStatement - ✓
+  * Step 4 - DB Migrations - ✓
+  * Step 5 - Basic Transactions - ✓
 * Part V: Declarative Transactions & AOP
-  * Step 1 - ✓
-  * Step 2 - ✓
-  * Step 3 - ✓
-  * Step 4 - n/a
-  * Step 5 - n/a
-  * Step 6 - n/a
-  * Step 7 - n/a
+  * Step 1 - Introducing Service Facade - ✓
+  * Step 2 - Proxy - ✓
+  * Step 3 - JDK Dynamic Proxy - ✓
+  * Step 4 - Class Proxy with CGLIB - ✓
+  * Step 5 - AspectJ AOP - n/a
+  * Step 6 - Spring AOP - n/a
+  * Step 7 - Spring Tx & Spring JDBC - n/a
+  * Puzzles - n/a
 * Part VI: DB Pools - n/a
 * Part VII: Hibernate - n/a

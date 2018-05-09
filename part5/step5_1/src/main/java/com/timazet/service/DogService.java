@@ -1,6 +1,5 @@
 package com.timazet.service;
 
-import com.timazet.controller.DogNotFoundException;
 import com.timazet.controller.dto.Dog;
 import com.timazet.dao.DogDao;
 import com.timazet.dao.JdbcConnectionHolder;
@@ -25,38 +24,26 @@ public class DogService {
 
     public Dog get(UUID id) {
         Assert.notNull(id, "Id should not be null");
-
-        Dog result = execute(() -> dao.get(id));
-        if (result == null) {
-            throw new DogNotFoundException(id);
-        }
-        return result;
+        return execute(() -> dao.get(id));
     }
 
     public Dog create(Dog dog) {
         Assert.notNull(dog, "Dog should not be null");
-
-        dog.setId(UUID.randomUUID());
-        execute(() -> dao.create(dog));
-        return dog;
+        return execute(() -> dao.create(dog));
     }
 
     public Dog update(Dog dog) {
         Assert.notNull(dog, "Dog should not be null");
         Assert.notNull(dog.getId(), "Id should not be null");
-
-        if (execute(() -> dao.update(dog)) <= 0) {
-            throw new DogNotFoundException(dog.getId());
-        }
-        return dog;
+        return execute(() -> dao.update(dog));
     }
 
     public void delete(UUID id) {
         Assert.notNull(id, "Id should not be null");
-
-        if (execute(() -> dao.delete(id)) <= 0) {
-            throw new DogNotFoundException(id);
-        }
+        execute(() -> {
+            dao.delete(id);
+            return null;
+        });
     }
 
     private <T> T execute(final Supplier<T> supplier) {

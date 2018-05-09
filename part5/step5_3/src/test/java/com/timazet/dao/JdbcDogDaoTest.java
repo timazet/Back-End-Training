@@ -45,8 +45,7 @@ public class JdbcDogDaoTest extends AbstractTestNGSpringContextTests {
         String sqlInjectionUsingName = "SQL Injection', null, -1, -1) --";
         dog.setName(sqlInjectionUsingName);
 
-        dogDao.create(dog);
-        Dog created = dogDao.get(dog.getId());
+        Dog created = dogDao.get(dogDao.create(dog).getId());
         assertThat(created.getName()).isNotEqualTo(name).isNotEqualTo("SQL Injection").isEqualTo(dog.getName());
         assertThat(created.getBirthDate()).isEqualTo(dog.getBirthDate());
         assertThat(created.getHeight()).isNotEqualTo(-1).isEqualTo(dog.getHeight());
@@ -56,13 +55,11 @@ public class JdbcDogDaoTest extends AbstractTestNGSpringContextTests {
     @Test
     public void shouldInsertAndUpdateDogWithoutConstraints() {
         Dog dog = generateValidDog();
-        dogDao.create(dog);
-        Dog created = dogDao.get(dog.getId());
+        Dog created = dogDao.get(dogDao.create(dog).getId());
         assertThatEquals(created, dog);
 
         dog = generateValidDog(created.getId());
-        dogDao.update(dog);
-        Dog updated = dogDao.get(dog.getId());
+        Dog updated = dogDao.get(dogDao.update(dog).getId());
         assertThatEquals(updated, dog);
     }
 
@@ -71,8 +68,7 @@ public class JdbcDogDaoTest extends AbstractTestNGSpringContextTests {
         assertThatSQLExceptionIsCause(() -> dogDao.create(toCreate));
 
         Dog dog = generateValidDog();
-        dogDao.create(dog);
-        Dog toUpdate = action.applyAndReturn(dog);
+        Dog toUpdate = action.applyAndReturn(dogDao.create(dog));
         assertThatSQLExceptionIsCause(() -> dogDao.update(toUpdate));
     }
 
@@ -81,8 +77,7 @@ public class JdbcDogDaoTest extends AbstractTestNGSpringContextTests {
         assertThatNoException(() -> dogDao.create(toCreate));
 
         Dog dog = generateValidDog();
-        dogDao.create(dog);
-        Dog toUpdate = action.applyAndReturn(dog);
+        Dog toUpdate = action.applyAndReturn(dogDao.create(dog));
         assertThatNoException(() -> dogDao.update(toUpdate));
     }
 

@@ -33,7 +33,7 @@ Java Professionals Course (https://github.com/qala-io/java-course/)
   * Step 2 - Proxy - ✓
   * Step 3 - JDK Dynamic Proxy - ✓
   * Step 4 - Class Proxy with CGLIB - ✓
-  * Step 5 - AspectJ AOP - n/a
+  * Step 5 - AspectJ AOP - ✓
   * Step 6 - Spring AOP - n/a
   * Step 7 - Spring Tx & Spring JDBC - n/a
   * Puzzles - n/a

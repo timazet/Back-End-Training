@@ -104,6 +104,14 @@
             <artifactId>aspectjweaver</artifactId>
             <version>${aspectj.version}</version>
         </dependency>
+        <!-- Aspects for LTW (load-time weaving)
+            If it's exclude from dependencies then no configuration and no aspects for LTW will be applied
+        -->
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>step5_5_aspects</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
 
         <!-- JDBC and migrations -->
         <dependency>
@@ -193,6 +201,16 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <!-- To activate LTW during test execution -->
+                    <argLine>
+                        -javaagent:"${settings.localRepository}"/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar
+                    </argLine>
+                </configuration>
             </plugin>
         </plugins>
     </build>

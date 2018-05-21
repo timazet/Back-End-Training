@@ -1,0 +1,13 @@
+<aspectj>
+    <!-- This is a configuration for LTW (load-time weaving)
+        LTW can be useful when you need to apply additional functionality but without recompiling source code
+        You should added into classpath jar with aspects and aop.mxl configuration file and specify java agent as
+        -javaagent:"aspectjweaver.jar"
+    -->
+    <aspects>
+        <aspect name="com.timazet.DogServiceAspect"/>
+        <weaver options="-showWeaveInfo">
+            <include within="com.timazet.service.*"/>
+        </weaver>
+    </aspects>
+</aspectj>

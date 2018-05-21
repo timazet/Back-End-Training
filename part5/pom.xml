@@ -12,6 +12,7 @@
         <module>step5_3</module>
         <module>step5_4</module>
         <module>step5_5</module>
+        <module>step5_5_aspects</module>
     </modules>
 
 </project>

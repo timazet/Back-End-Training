@@ -3,7 +3,7 @@ package com.timazet.aspect;
 import java.lang.annotation.*;
 
 /**
- * TODO added description
+ * Annotation that is used to find out what methods should be logged
  */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)

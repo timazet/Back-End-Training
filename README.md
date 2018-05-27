@@ -35,7 +35,12 @@ Java Professionals Course (https://github.com/qala-io/java-course/)
   * Step 4 - Class Proxy with CGLIB - ✓
   * Step 5 - AspectJ AOP - ✓
   * Step 6 - Spring AOP - ✓
-  * Step 7 - Spring Tx & Spring JDBC - n/a
-  * Puzzles - n/a
-* Part VI: DB Pools - n/a
+  * Step 7 - Spring Tx & Spring JDBC - ✓
+  * Puzzles - ✓
+* Part VI: DB Pools
+  * Step 1 - General Approach - n/a
+  * Step 2 - Basic Configuration - n/a
+  * Step 3 - Testing Connections - n/a
+  * Step 4 - Timeouts - n/a
+  * Step 5 - DB Pools in App Servers - n/a
 * Part VII: Hibernate - n/a

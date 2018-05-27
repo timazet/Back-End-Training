@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <import resource="persistence-context.xml"/>
+
+    <!-- By changing 'proxy-target-class' value we can manipulate what exactly mechanism will be used by default
+        to create a proxy: CGLIB or JdkDynamicProxy.
+        Of course, Spring takes into account presence of implemented interfaces, which are required for JdkDynamicProxy usage.
+        If there is no implemented interfaces, so it uses CGLIB in spite of the fact that JdkDynamicProxy usage is specified.
+    -->
+    <aop:aspectj-autoproxy proxy-target-class="false"/>
+
+    <bean class="com.timazet.aspect.TransactionalAspect">
+        <constructor-arg ref="txManager"/>
+    </bean>
+
+    <bean id="dogService" class="com.timazet.service.DogService">
+        <constructor-arg ref="dogDao"/>
+    </bean>
+
+</beans>

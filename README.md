@@ -38,7 +38,7 @@ Java Professionals Course (https://github.com/qala-io/java-course/)
   * Step 7 - Spring Tx & Spring JDBC - ✓
   * Puzzles - ✓
 * Part VI: DB Pools
-  * Step 1 - General Approach - n/a
+  * Step 1 - General Approach - ✓
   * Step 2 - Basic Configuration - n/a
   * Step 3 - Testing Connections - n/a
   * Step 4 - Timeouts - n/a

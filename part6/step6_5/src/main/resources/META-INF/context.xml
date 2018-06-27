@@ -1,0 +1,21 @@
+<Context>
+
+    <!-- Here is a good explanation of each available parameter of connection pool (https://tomcat.apache.org/tomcat-8.5-doc/jndi-resources-howto.html) -->
+
+    <!-- matching c3p0 - - - dbcp2
+        minPoolSize - - - minIdle
+        maxPoolSize - - - maxTotal
+        testConnectionOnCheckout - - - testOnBorrow
+        testConnectionOnCheckin - - - testOnReturn
+        idleConnectionTestPeriod - - - minEvictableIdleTimeMillis
+        checkoutTimeout - - - maxWaitMillis
+        unreturnedConnectionTimeout - - - removeAbandonedTimeout
+        debugUnreturnedConnectionStackTraces - - - logAbandoned
+    -->
+
+    <Resource name="jdbc/dog_db" auth="Container" type="javax.sql.DataSource"
+              minIdle="4" maxIdle="8" maxTotal="20"
+              username="sa" password="" driverClassName="org.h2.Driver"
+              url="jdbc:h2:mem:dog_db;DB_CLOSE_DELAY=-1;"/>
+
+</Context>

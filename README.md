@@ -40,7 +40,12 @@ Java Professionals Course (https://github.com/qala-io/java-course/)
 * Part VI: DB Pools
   * Step 1 - General Approach - ✓
   * Step 2 - Basic Configuration - ✓
-  * Step 3 - Testing Connections - n/a
-  * Step 4 - Timeouts - n/a
-  * Step 5 - DB Pools in App Servers - n/a
-* Part VII: Hibernate - n/a
+  * Step 3 - Testing Connections - ✓
+  * Step 4 - Timeouts - ✓
+  * Step 5 - DB Pools in App Servers - ✓
+* Part VII: Hibernate
+  * Step 1 - How it works - n/a
+  * Step 2 - Re-write DAO - n/a
+  * Step 3 - Persisting Entities - n/a
+  * Step 4 - Loading Data - n/a
+  * Puzzles - n/a

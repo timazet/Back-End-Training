@@ -7,6 +7,7 @@ import org.hamcrest.CustomMatcher;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -30,7 +31,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@ContextConfiguration({"classpath:persistence-context-test.xml", "classpath:application-context.xml", "classpath:web-context.xml"})
+@ActiveProfiles("hibernate")
+@ContextConfiguration({"classpath:application-context.xml", "classpath:web-context.xml"})
 @WebAppConfiguration
 public class DogControllerTest extends AbstractTestNGSpringContextTests {
 

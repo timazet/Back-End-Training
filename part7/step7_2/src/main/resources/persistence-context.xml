@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/jdbc
+        http://www.springframework.org/schema/jdbc/spring-jdbc.xsd">
+
+    <context:annotation-config/>
+
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+        <property name="driverClass" value="org.h2.Driver"/>
+        <property name="jdbcUrl" value="jdbc:h2:mem:dog_db;DB_CLOSE_DELAY=-1;"/>
+        <property name="user" value="sa"/>
+        <property name="password" value=""/>
+        <!-- By default, c3p0 uses MIN_POOL_SIZE = 3
+            That value should be more than maxThreads property and definitely less than maxConnections property
+            of Servlet container, because in most cases each HTTP connection can use at least one JDBC connection,
+            being processed by one of the thread pool's available threads. -->
+        <property name="minPoolSize" value="4"/>
+        <!-- By default, c3p0 uses MAX_POOL_SIZE = 15
+            That value should be more than MIN_POOL_SIZE with ability to handle high load -->
+        <property name="maxPoolSize" value="20"/>
+        <!-- Presence of maxStatements and maxStatementsPerConnection configures which statement cache implementation will be used:
+            DoubleMaxStatementCache, PerConnectionMaxOnlyStatementCache, GlobalMaxOnlyStatementCache -->
+        <property name="maxStatements" value="10"/>
+        <property name="maxStatementsPerConnection" value="3"/>
+    </bean>
+
+    <bean id="flyway" class="org.flywaydb.core.Flyway" init-method="migrate">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <beans profile="default">
+        <bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+            <constructor-arg ref="dataSource"/>
+        </bean>
+
+        <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+            <constructor-arg ref="dataSource"/>
+        </bean>
+
+        <bean id="dogDao" class="com.timazet.dao.JdbcDogDao">
+            <constructor-arg ref="jdbcTemplate"/>
+        </bean>
+    </beans>
+
+    <beans profile="hibernate">
+        <bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+            <property name="dataSource" ref="dataSource"/>
+            <property name="mappingResources" value="mappings.hbm.xml"/>
+            <property name="hibernateProperties">
+                <props>
+                    <prop key="hibernate.dialect">org.hibernate.dialect.H2Dialect</prop>
+                    <prop key="hibernate.show_sql">true</prop>
+                </props>
+            </property>
+        </bean>
+
+        <bean id="txManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+            <constructor-arg ref="sessionFactory"/>
+        </bean>
+
+
+        <bean id="dogDao" class="com.timazet.dao.HibernateDogDao">
+            <constructor-arg ref="sessionFactory"/>
+        </bean>
+    </beans>
+
+</beans>

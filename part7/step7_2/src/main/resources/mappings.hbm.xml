@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.timazet.model" default-access="field">
+
+    <class name="Dog" table="DOG">
+        <id name="id" column="ID"/>
+        <property name="name" not-null="true" column="NAME"/>
+        <property name="birthDate" not-null="false" column="BIRTH_DATE"/>
+        <property name="height" not-null="true" column="HEIGHT"/>
+        <property name="weight" not-null="true" column="WEIGHT"/>
+    </class>
+</hibernate-mapping>

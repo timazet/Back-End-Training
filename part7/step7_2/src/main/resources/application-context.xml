@@ -7,6 +7,8 @@
         http://www.springframework.org/schema/tx
         http://www.springframework.org/schema/tx/spring-tx.xsd">
 
+    <import resource="persistence-context.xml"/>
+
     <tx:annotation-driven transaction-manager="txManager"/>
 
     <bean id="dogService" class="com.timazet.service.DogService">

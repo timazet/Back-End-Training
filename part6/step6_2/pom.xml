@@ -9,7 +9,7 @@
     <properties>
         <spring.version>5.0.2.RELEASE</spring.version>
         <aspectj.version>1.8.13</aspectj.version>
-        <jackson.version>2.9.2</jackson.version>
+        <jackson.version>2.10.0</jackson.version>
         <h2.version>1.4.197</h2.version>
         <c3po.version>0.9.5.2</c3po.version>
         <flyway.version>5.0.7</flyway.version>
